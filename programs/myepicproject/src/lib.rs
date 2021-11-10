@@ -14,14 +14,15 @@ pub mod myepicproject {
   // The fucntion now accepts a gif_link param from the user.
   pub fn add_gif(ctx: Context<AddGif>, gif_link: String) -> ProgramResult {
     let base_account = &mut ctx.accounts.base_account;
-		
-	// Build the struct.
+		let user = &mut ctx.accounts.user;
+
+	  // Build the struct.
     let item = ItemStruct {
       gif_link: gif_link.to_string(),
-      user_address: *base_account.to_account_info().key,
+      user_address: *user.to_account_info().key,
     };
 		
-	// Add it to the gif_list vector.
+	  // Add it to the gif_list vector.
     base_account.gif_list.push(item);
     base_account.total_gifs += 1;
     Ok(())
@@ -41,6 +42,8 @@ pub struct StartStuffOff<'info> {
 pub struct AddGif<'info> {
   #[account(mut)]
   pub base_account: Account<'info, BaseAccount>,
+  #[account(mut)]
+  pub user: Signer<'info>,
 }
 
 // Create a custom struct for us to work with.

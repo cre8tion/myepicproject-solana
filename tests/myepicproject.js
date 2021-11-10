@@ -26,6 +26,7 @@ const main = async() => {
   await program.rpc.addGif("https://media.giphy.com/media/Aw2V3gGD5znfG/giphy.gif", {
     accounts: {
       baseAccount: baseAccount.publicKey,
+      user: provider.wallet.publicKey,
     },
   });
   
